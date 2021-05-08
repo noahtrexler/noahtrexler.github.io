@@ -109,6 +109,7 @@ export class Game {
         } else {
             this.loseListeners.forEach(callback => callback(this.gameState));
         }
+        this.gameState.over = true;
     }
 
     playerWon() {
