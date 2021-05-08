@@ -55,6 +55,7 @@ export class Game {
 
     hitMe(random) {
         if (this.gameState.over) return;
+        if (this.gameState.won) return;
 
         random = Math.floor(random % this.deck.length);
         this.playerHand.push(this.deck.splice(random, 1)[0]);
@@ -82,9 +83,8 @@ export class Game {
     playAI(randomArray) {
 
         let i = 0;
-        let total = this.getHandTotal(this.aiHand);
 
-        while (this.gameState.over === false && this.gameState.playerTurn === false &&  total < 17) {
+        while (this.gameState.over === false && this.gameState.playerTurn === false &&  this.getHandTotal(this.aiHand) < 17) {
             this.hitAI(randomArray[i]);
             if (this.getHandTotal(this.aiHand) > 21) {
                 this.gameState.over = true;
