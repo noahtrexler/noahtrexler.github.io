@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Quantum Blackjack</title>
+
+        <link rel="stylesheet" href="./style.css" />
+
+        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>    
+        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-database.js"></script>
+
+    </head>
+    <body>
+
+        <h3>Enter your information, then either log in or sign up!</h3>
+
+        <input type="email" placeholder="EMAIL" id="email"/>
+        <input type="password" placeholder="PASSWORD" id="password"/><br><br>
+        <button onclick="login()" id="login">Log In</button>
+        <button onclick="signup()">Sign Up</button><br><br>
+        <button onclick="logout()" style="visibility:hidden;" id="logout">Log Out</button><br><br>
+        
+
+        <div>
+            <p id="message"></p>
+        </div>
+
+        <button><a href="./index.html">Back</a></button>
+
+    </body>
+
+    <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+        apiKey: "AIzaSyAsulDD5FjkVWJCxeuXwkwZZijQU_Vy8vk",
+        authDomain: "comp426final-f2f31.firebaseapp.com",
+        projectId: "comp426final-f2f31",
+        storageBucket: "comp426final-f2f31.appspot.com",
+        messagingSenderId: "42694011957",
+        appId: "1:42694011957:web:8ce021ee18999fadd4d57c",
+        measurementId: "G-RLQ88DQK18"
+    };
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    firebase.analytics();
+      
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    auth.onAuthStateChanged( function(user) {
+        if (user) {
+            document.getElementById("message").innerHTML = "Welcome " + user.email + "!";
+            document.getElementById("logout").style.visibility = "visible";
+            document.getElementById("login").style.visibility = "hidden";
+        } else {
+            document.getElementById("message").innerHTML = "Welcome!";
+            document.getElementById("login").style.visibility = "visible";
+            document.getElementById("logout").style.visibility = "hidden";
+        }
+    });
+
+    </script>
+        
+    <script>
+        function login() {
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            auth.signInWithEmailAndPassword(email, password).catch( function(error) {
+                let errorCode = error.code;
+                let errorMessage = error.message;
+                document.getElementById("message").innerHTML = "There was an error logging in! Try again.";
+            });
+        };
+
+        function signup() {
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            auth.createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                var user = userCredential.user;
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                document.getElementById("message").innerHTML = "There was an error signing up! Try again.";
+            });
+        }
+
+        function logout() {
+            auth.signOut().then(() => {
+
+            }).catch((error) => {
+                document.getElementById("message").innerHTML = "There was an error signing out! Try again.";
+            });
+        };
+    </script>
+
+</html>

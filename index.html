@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Quantum Blackjack</title>
+
+        <link rel="stylesheet" href="./style.css" />
+
+        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>    
+        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-database.js"></script>
+
+    </head>
+
+    <body>
+        <main>
+            <h1><em>Quantum Blackjack</em></h1>
+            <h2 id="welcome"></h2>
+            <button ><a href="./login.html" id="login">Log In</a></button>
+            <button><a href="./login.html">Sign Up</a></button>
+            <input type="checkbox" name="checkbox" id="dark"/>
+            <label for="checkbox">Dark Mode</label>
+            <h4></h4>
+            <hr />
+            <div id="ai">
+                <img src="cards/HAL9000.svg" id="hal">
+                <div id="text">
+
+                </div>
+            </div>
+            <div id="root">
+                <div id="game">
+                    <div id="aiHand"></div>
+                    <div id="playerHand"></div>
+                </div>
+            </div>
+            <div id="input">
+                <button id="reset">Reset</button>
+                <button id="hit">Hit</button>
+                <button id="stay">Stay</button>
+                <button id="joke">Joke</button>
+            </div>
+
+            </div>
+            <audio id="audio">
+                <source src="" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </main>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" type="text/javascript"></script>
+        <script type="module" src="./controller.js"></script>
+
+        <script>
+
+            if (document.querySelector("input[name=checkbox]").checked) {
+                document.body.style.background = "#21125e";
+                document.body.style.color = "#e4deff";
+            }
+
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            var firebaseConfig = {
+                apiKey: "AIzaSyAsulDD5FjkVWJCxeuXwkwZZijQU_Vy8vk",
+                authDomain: "comp426final-f2f31.firebaseapp.com",
+                projectId: "comp426final-f2f31",
+                storageBucket: "comp426final-f2f31.appspot.com",
+                messagingSenderId: "42694011957",
+                appId: "1:42694011957:web:8ce021ee18999fadd4d57c",
+                measurementId: "G-RLQ88DQK18"
+            };
+            // Initialize Firebase
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            firebase.analytics();
+              
+            const auth = firebase.auth();
+            const db = firebase.database();
+        
+            auth.onAuthStateChanged( function(user) {
+                if (user) {
+                    document.getElementById("welcome").innerHTML = "Welcome " + user.email + "!";
+                    document.getElementById("login").innerHTML = "Log out";
+                    if (user.dark_mode === 1) {
+                        document.body.style.background = "#21125e";
+                        document.body.style.color = "#e4deff";
+                    } else {
+                        document.body.style.background = "white";
+                    document.body.style.color = "black";
+                    }
+                } else {
+                    document.getElementById("welcome").innerHTML = "Welcome!";
+                    document.getElementById("login").innerHTML = "Log in";
+                }
+            });
+
+            let checkbox = document.querySelector("input[name=checkbox]");
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    document.body.style.background = "#21125e";
+                    document.body.style.color = "#e4deff";
+                    firebase.analytics().setUserProperties({dark_mode: '1'});
+                } else {
+                    document.body.style.background = "white";
+                    document.body.style.color = "black";
+                    firebase.analytics().setUserProperties({dark_mode: '0'});
+                }
+            });
+        </script>
+
+        <script>
+
+        </script>
+
+    </body>
+</html>

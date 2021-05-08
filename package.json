@@ -1,0 +1,17 @@
+{
+  "name": "final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "controller.js",
+  "scripts": {
+    "game": "node game.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^8.5.0",
+    "firebase-admin": "^9.7.0"
+  },
+  "mongodb_srv": "mongodb+srv://noah:password12345@cluster0.tybob.mongodb.net/COMP426FinalDB?retryWrites=true&w=majority"
+}
