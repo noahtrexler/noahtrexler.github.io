@@ -24,7 +24,6 @@ export const renderHand = function(hand) {
 }
 
 export const renderAIHand = function(hand, initFlag) {
-    console.log("ai hand" + hand.length);
     let div = document.getElementById('aiHand');
     div.innerHTML = '';
 
@@ -40,7 +39,6 @@ export const renderAIHand = function(hand, initFlag) {
     }
 
     for (i; i < hand.length; i++) {
-        console.log("here");
         let card = hand[i];
         let img = document.createElement('img');
         img.src = `./cards/${card.value}of${card.suit}.jpg`;
@@ -73,9 +71,6 @@ export const controller = async function () {
                 textUpdate("Generating Quantum random numbers... ");
                 game.buildPlayer(data.data[0], data.data[1]);
                 game.buildAI(data.data[2], data.data[3]);
-                game.playerHand.forEach(card => {
-                    game.printCard(card);
-                })
                 renderAIHand(game.aiHand, true);
                 renderHand(game.playerHand);
                 textUpdate("Generating Quantum random numbers... " + data.data);
