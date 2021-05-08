@@ -104,6 +104,10 @@ export class Game {
             i++;
         }
 
+        if (this.playerWon()) {
+            this.gameState.won = true;
+        }
+
         if (this.gameState.won) {
             this.winListeners.forEach(callback => callback(this.gameState));
         } else {
